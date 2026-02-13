@@ -45,7 +45,7 @@
         
         {/* --- SECTION 1: HERO --- */}
         <section className="relative min-h-screen flex flex-col justify-center px-12 md:px-24 pt-24">
-          {/* BACKGROUND EFFECT - ABSTRACT GOLD LINES WITH GLOW */}
+          {/* BACKGROUND EFFECT - ANIMATED GOLD LINES */}
           <div className="absolute inset-0 opacity-30">
             <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -61,17 +61,46 @@
                   <stop offset="100%" style={{ stopColor: '#FF8C00', stopOpacity: 0.4 }} />
                 </linearGradient>
               </defs>
-              <path d="M 0 200 Q 400 100 800 250 T 1600 200" stroke="url(#goldGradHero)" strokeWidth="8" fill="none" filter="url(#glowHero)" />
-              <path d="M 300 0 Q 600 300 1000 150 T 1800 100" stroke="url(#goldGradHero)" strokeWidth="6" fill="none" filter="url(#glowHero)" />
-              <line x1="200" y1="0" x2="400" y2="600" stroke="#FFB500" strokeWidth="4" filter="url(#glowHero)" />
+              <path className="animate-snake-1" d="M 0 200 Q 400 100 800 250 T 1600 200" stroke="url(#goldGradHero)" strokeWidth="8" fill="none" filter="url(#glowHero)" />
+              <path className="animate-snake-2" d="M 300 0 Q 600 300 1000 150 T 1800 100" stroke="url(#goldGradHero)" strokeWidth="6" fill="none" filter="url(#glowHero)" />
+              <line className="animate-snake-3" x1="200" y1="0" x2="400" y2="600" stroke="#FFB500" strokeWidth="4" filter="url(#glowHero)" />
             </svg>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif max-w-4xl leading-tight mb-4 relative z-10">
-            We provides <span className="italic" style={{ color: goldColor }}>integrated</span> solutions built on expertise, precision, and reliable execution.
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes snake-move {
+              0%, 100% { d: path("M 0 200 Q 400 100 800 250 T 1600 200"); }
+              50% { d: path("M 0 250 Q 400 150 800 200 T 1600 250"); }
+            }
+            @keyframes snake-move-2 {
+              0%, 100% { d: path("M 300 0 Q 600 300 1000 150 T 1800 100"); }
+              50% { d: path("M 300 50 Q 600 250 1000 200 T 1800 50"); }
+            }
+            .animate-snake-1 {
+              animation: snake-move 8s ease-in-out infinite;
+            }
+            .animate-snake-2 {
+              animation: snake-move-2 10s ease-in-out infinite;
+            }
+            .animate-snake-3 {
+              animation: pulse 3s ease-in-out infinite;
+            }
+            @keyframes pulse {
+              0%, 100% { opacity: 0.3; }
+              50% { opacity: 0.8; }
+            }
+          `}} />
+
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-serif max-w-4xl leading-tight mb-4 relative z-10" data-aos="fade-up">
+            We provides <span
+                          className="italic bg-clip-text text-transparent"
+                          style={{
+                            backgroundImage: "linear-gradient(135deg, #FFB500, #FFDFA3)"
+                          }}
+                        >integrated</span> solutions built on expertise, precision, and reliable execution.
           </h1>
           
-          <div className="relative w-full flex justify-end z-10 mt-1">
+          <div className="relative w-full flex justify-end z-10 mt-1" data-aos="fade-left" data-aos-delay="200">
 
             {/* DESKTOP / LAPTOP VERSION (MASKED HERO) */}
             <div className="hidden md:block relative w-full md:w-[78%] h-[520px] rounded-[50px] shadow-2xl bg-black">
@@ -109,7 +138,7 @@
         {/* --- SECTION 2: ABOUT TEXT --- */}
         <section className="py-32 px-12 md:px-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-start relative overflow-hidden">
           
-          {/* BACKGROUND EFFECT - ABSTRACT GOLD LINES WITH GLOW */}
+          {/* BACKGROUND EFFECT - ANIMATED GOLD LINES */}
           <div className="absolute inset-0 opacity-30">
             <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -125,15 +154,42 @@
                   <stop offset="100%" style={{ stopColor: '#FF8C00', stopOpacity: 0.4 }} />
                 </linearGradient>
               </defs>
-              <path d="M 0 150 Q 350 80 700 180 T 1400 150" stroke="url(#goldGradAbout)" strokeWidth="8" fill="none" filter="url(#glowAbout)" />
-              <path d="M 250 0 Q 550 250 900 120 T 1600 80" stroke="url(#goldGradAbout)" strokeWidth="6" fill="none" filter="url(#glowAbout)" />
-              <line x1="1000" y1="0" x2="1200" y2="500" stroke="#FF8C00" strokeWidth="5" filter="url(#glowAbout)" />
+              <path className="animate-snake-about-1" d="M 0 150 Q 350 80 700 180 T 1400 150" stroke="url(#goldGradAbout)" strokeWidth="8" fill="none" filter="url(#glowAbout)" />
+              <path className="animate-snake-about-2" d="M 250 0 Q 550 250 900 120 T 1600 80" stroke="url(#goldGradAbout)" strokeWidth="6" fill="none" filter="url(#glowAbout)" />
+              <line className="animate-snake-about-3" x1="1000" y1="0" x2="1200" y2="500" stroke="#FF8C00" strokeWidth="5" filter="url(#glowAbout)" />
             </svg>
           </div>
+
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes snake-about-1 {
+              0%, 100% { transform: translateY(0) translateX(0); }
+              25% { transform: translateY(-15px) translateX(10px); }
+              50% { transform: translateY(0) translateX(20px); }
+              75% { transform: translateY(15px) translateX(10px); }
+            }
+            @keyframes snake-about-2 {
+              0%, 100% { transform: translateY(0) translateX(0); }
+              33% { transform: translateY(12px) translateX(-12px); }
+              66% { transform: translateY(-12px) translateX(12px); }
+            }
+            @keyframes snake-about-3 {
+              0%, 100% { opacity: 0.3; }
+              50% { opacity: 0.8; }
+            }
+            .animate-snake-about-1 {
+              animation: snake-about-1 14s ease-in-out infinite;
+            }
+            .animate-snake-about-2 {
+              animation: snake-about-2 16s ease-in-out infinite;
+            }
+            .animate-snake-about-3 {
+              animation: snake-about-3 4s ease-in-out infinite;
+            }
+          `}} />
           
-          <h2 className="text-5xl font-serif relative z-10">About <br /> Glori</h2>
+          <h2 className="text-5xl font-serif relative z-10" data-aos="fade-right">About <br /> Glori</h2>
           
-          <div className="max-w-xl relative z-10">
+          <div className="max-w-xl relative z-10" data-aos="fade-left" data-aos-delay="100">
             <div className="mb-8">
               <svg width="60" height="60" viewBox="0 0 100 100" fill="none">
                   <circle cx="50" cy="50" r="48" stroke={goldColor} strokeWidth="1"/>
@@ -159,13 +215,13 @@
           <section className="bg-white text-black py-32 px-12 md:px-24 min-h-screen relative overflow-hidden pb-48">
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20 relative z-10">
-              <h2 className="text-6xl font-serif">
+              <h2 className="text-6xl font-serif" data-aos="fade-right">
               The Way <br /> We Work
               </h2>
 
               <div className="space-y-12">
               {workSteps.map((step, idx) => (
-                  <div key={idx} className="border-b border-gray-300 pb-8">
+                  <div key={idx} className="border-b border-gray-300 pb-8" data-aos="fade-up" data-aos-delay={idx * 100}>
                   <h3 className="text-2xl font-serif mb-4">{step.title}</h3>
                   <p className="text-gray-600 max-w-md">{step.desc}</p>
                   </div>
@@ -195,7 +251,7 @@
             }
 
             .marquee-text {
-              font-size: 120px;
+              font-size: clamp(36px, 12vw, 120px);
               font-weight: 500; /* lebih kurus = lebih tajem */
               white-space: nowrap;
 
@@ -207,9 +263,10 @@
               padding-right: 40px;
               font-weight: 500;
               text-rendering: geometricPrecision;
-              -webkit-font-smoothing: none; /* MATIIN SMOOTH */
+              -webkit-font-smoothing: none;
             }
 
+            
 
 
             @keyframes marquee {
@@ -225,7 +282,7 @@
       {/* --- SECTION 4: STATS --- */}
           <section className="relative py-28 border-y border-gray-800 bg-black overflow-hidden">
 
-          {/* BACKGROUND EFFECT - ABSTRACT GOLD LINES WITH GLOW */}
+          {/* BACKGROUND EFFECT - ANIMATED GOLD LINES */}
           <div className="absolute inset-0 opacity-40">
             <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -241,18 +298,55 @@
                   <stop offset="100%" style={{ stopColor: '#FF8C00', stopOpacity: 0.4 }} />
                 </linearGradient>
               </defs>
-              <path d="M 0 100 Q 300 50 600 150 T 1200 100" stroke="url(#goldGrad)" strokeWidth="8" fill="none" filter="url(#glow)" />
-              <path d="M 200 0 Q 500 200 800 100 T 1400 50" stroke="url(#goldGrad)" strokeWidth="6" fill="none" filter="url(#glow)" />
-              <path d="M -100 300 Q 400 250 700 350 T 1300 300" stroke="url(#goldGrad)" strokeWidth="10" fill="none" filter="url(#glow)" />
-              <line x1="100" y1="0" x2="300" y2="400" stroke="#FFB500" strokeWidth="4" filter="url(#glow)" />
-              <line x1="900" y1="0" x2="1100" y2="500" stroke="#FF8C00" strokeWidth="5" filter="url(#glow)" />
+              <path className="animate-snake-stats-1" d="M 0 100 Q 300 50 600 150 T 1200 100" stroke="url(#goldGrad)" strokeWidth="8" fill="none" filter="url(#glow)" />
+              <path className="animate-snake-stats-2" d="M 200 0 Q 500 200 800 100 T 1400 50" stroke="url(#goldGrad)" strokeWidth="6" fill="none" filter="url(#glow)" />
+              <path className="animate-snake-stats-3" d="M -100 300 Q 400 250 700 350 T 1300 300" stroke="url(#goldGrad)" strokeWidth="10" fill="none" filter="url(#glow)" />
+              <line className="animate-pulse-1" x1="100" y1="0" x2="300" y2="400" stroke="#FFB500" strokeWidth="4" filter="url(#glow)" />
+              <line className="animate-pulse-2" x1="900" y1="0" x2="1100" y2="500" stroke="#FF8C00" strokeWidth="5" filter="url(#glow)" />
             </svg>
           </div>
+
+          <style dangerouslySetInnerHTML={{ __html: `
+            .animate-snake-stats-1 {
+              animation: snake-stats-1 12s ease-in-out infinite;
+            }
+            .animate-snake-stats-2 {
+              animation: snake-stats-2 15s ease-in-out infinite;
+            }
+            .animate-snake-stats-3 {
+              animation: snake-stats-3 18s ease-in-out infinite;
+            }
+            .animate-pulse-1 {
+              animation: pulse-line 4s ease-in-out infinite;
+            }
+            .animate-pulse-2 {
+              animation: pulse-line 5s ease-in-out infinite 1s;
+            }
+            @keyframes snake-stats-1 {
+              0%, 100% { transform: translateY(0) translateX(0); }
+              25% { transform: translateY(-20px) translateX(10px); }
+              50% { transform: translateY(0) translateX(20px); }
+              75% { transform: translateY(20px) translateX(10px); }
+            }
+            @keyframes snake-stats-2 {
+              0%, 100% { transform: translateY(0) translateX(0); }
+              33% { transform: translateY(15px) translateX(-15px); }
+              66% { transform: translateY(-15px) translateX(15px); }
+            }
+            @keyframes snake-stats-3 {
+              0%, 100% { transform: translateY(0) translateX(0); }
+              50% { transform: translateY(-25px) translateX(-20px); }
+            }
+            @keyframes pulse-line {
+              0%, 100% { opacity: 0.3; stroke-width: 4; }
+              50% { opacity: 1; stroke-width: 6; }
+            }
+          `}} />
 
           {/* --- CONTENT --- */}
           <div className="px-12 md:px-24 grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
 
-              <div className="flex items-start gap-6">
+              <div className="flex items-start gap-6" data-aos="fade-up">
               <span className="text-7xl font-light">7+</span>
               <p className="text-sm text-gray-400 mt-2 uppercase tracking-widest leading-tight">
                   Years of experience,<br/>
@@ -260,14 +354,14 @@
               </p>
               </div>
 
-              <div className="flex flex-col items-center text-center border-x border-gray-800 px-8">
+              <div className="flex flex-col items-center text-center border-x border-gray-800 px-8" data-aos="fade-up" data-aos-delay="100">
               <h3 className="text-3xl font-serif mb-2">End-to-end</h3>
               <p className="text-xs text-gray-400 uppercase tracking-widest max-w-xs">
                   Integrated solutions. Managing every stage from land preparation to fully functional spaces.
               </p>
               </div>
 
-              <div className="flex items-start gap-6">
+              <div className="flex items-start gap-6" data-aos="fade-up" data-aos-delay="200">
               <span className="text-3xl font-serif mb-2">Quality & Reliability</span>
               <p className="text-sm text-gray-400 mt-2 uppercase tracking-widest leading-tight">
                   Committed to consistent results through professional execution and trusted service.
@@ -277,7 +371,7 @@
           </div>
 
           {/* --- QUOTE --- */}
-          <div className="mt-24 text-center px-12 relative z-10">
+          <div className="mt-24 text-center px-12 relative z-10" data-aos="zoom-in">
               <p className="text-2xl md:text-3xl font-serif italic max-w-4xl mx-auto leading-relaxed">
               Our goal is not only to complete projects, but to build long-term trust through{" "}
               <span className="text-gray-400">consistent results and dependable service.</span>
@@ -291,7 +385,7 @@
         {/* --- SECTION 5: CLIENTS & CLOSING --- */}
         <section className="py-32 bg-black text-center px-6 md:px-12 relative overflow-hidden">
 
-          {/* GOLD ACCENT BACKDROP */}
+          {/* GOLD ACCENT BACKDROP - ANIMATED */}
           <div className="absolute inset-0 opacity-30 pointer-events-none">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -302,23 +396,46 @@
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
-
                 <linearGradient id="goldClientGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#FFB500" stopOpacity="0.7" />
                   <stop offset="100%" stopColor="#FF8C00" stopOpacity="0.4" />
                 </linearGradient>
               </defs>
-
-              <path d="M 0 200 Q 400 120 900 200 T 1800 160" stroke="url(#goldClientGrad)" strokeWidth="7" fill="none" filter="url(#glowClient)" />
-              <path d="M 200 80 Q 700 200 1400 120" stroke="url(#goldClientGrad)" strokeWidth="5" fill="none" filter="url(#glowClient)" />
+              <path className="animate-snake-client-1" d="M 0 200 Q 400 120 900 200 T 1800 160" stroke="url(#goldClientGrad)" strokeWidth="7" fill="none" filter="url(#glowClient)" />
+              <path className="animate-snake-client-2" d="M 200 80 Q 700 200 1400 120" stroke="url(#goldClientGrad)" strokeWidth="5" fill="none" filter="url(#glowClient)" />
             </svg>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-serif mb-4 relative z-10">
-            Our <span style={{ color: goldColor }}>Client</span>
+          <style dangerouslySetInnerHTML={{ __html: `
+            .animate-snake-client-1 {
+              animation: snake-client-1 14s ease-in-out infinite;
+            }
+            .animate-snake-client-2 {
+              animation: snake-client-2 16s ease-in-out infinite;
+            }
+            @keyframes snake-client-1 {
+              0%, 100% { transform: translateY(0) translateX(0); }
+              25% { transform: translateY(-30px) translateX(20px); }
+              50% { transform: translateY(0) translateX(40px); }
+              75% { transform: translateY(30px) translateX(20px); }
+            }
+            @keyframes snake-client-2 {
+              0%, 100% { transform: translateY(0) translateX(0); }
+              33% { transform: translateY(25px) translateX(-25px); }
+              66% { transform: translateY(-25px) translateX(25px); }
+            }
+          `}} />
+
+          <h2 className="text-4xl md:text-5xl font-serif mb-4 relative z-10" data-aos="fade-up">
+            Our <span style={{
+                            backgroundImage: "linear-gradient(135deg, #FFB500, #FFDFA3)",
+                            backgroundClip: "text",
+                            WebkitBackgroundClip: "text",
+                            color: "transparent"
+                          }}>Client</span>
           </h2>
 
-          <p className="text-gray-500 mb-16 uppercase tracking-widest text-sm relative z-10">
+          <p className="text-gray-500 mb-16 uppercase tracking-widest text-sm relative z-10" data-aos="fade-up" data-aos-delay="100">
             Trusted by individuals and organizations across various industries.
           </p>
                 
@@ -405,23 +522,28 @@
           `}} />
 
           {/* CLOSING SECTION — TIDAK DIUBAH */}
-          <div className="relative h-[600px] w-full flex items-center justify-center overflow-hidden rounded-3xl mt-24">
+          <div className="relative h-[600px] w-full flex items-center justify-center overflow-hidden rounded-3xl mt-24" data-aos="zoom-in-up">
             <img src="/closing-bg.jpg" className="absolute inset-0 w-full h-full object-cover brightness-50" alt="background" />
-            <div className="relative z-10 max-w-3xl px-6">
-              <h2 className="text-4xl md:text-5xl font-serif leading-tight">
+            <div className="relative z-10 max-w-3xl px-6" data-aos="fade-up" data-aos-delay="200">
+              <h2 className="text-4xl md:text-4xl font-serif leading-tight">
                 Your vision deserves the right partner. <br />
-                Let's <span className="italic" style={{ color: goldColor }}>make it happen</span> together.
+                Let's <span className="italic" style={{
+                            backgroundImage: "linear-gradient(135deg, #FFB500, #FFDFA3)",
+                            backgroundClip: "text",
+                            WebkitBackgroundClip: "text",
+                            color: "transparent"
+                          }}>make it happen</span> together.
               </h2>
               <button 
                 className="mt-12 relative px-8 py-3 rounded-lg font-semibold text-white text-base transition-all hover:scale-105"
                 style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
+                  background: 'rgba(255, 255, 255, 0.4)',
                   backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  border: '1px solid rgba(255, 208, 0, 0.49)',
                   boxShadow: `0 0 30px ${goldColor}80, 0 0 60px ${goldColor}40`
                 }}
               >
-                contact us
+                Start Project
               </button>
             </div>
           </div>

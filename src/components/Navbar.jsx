@@ -6,69 +6,78 @@ const Navbar = ({ activePage = 'home' }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/80 border-b border-gray-800">
-      <div className="flex items-center justify-between py-5 px-6 md:px-12">
-
-        {/* LOGO */}
-        <div className="font-bold tracking-wide text-lg">
-          GLORI
-        </div>
-
-        {/* DESKTOP MENU */}
-        <div className="hidden md:flex space-x-8 text-sm font-medium items-center">
-          <Link 
-            to="/" 
-            className={activePage === 'home' ? 'border-b pb-1' : 'hover:text-gray-400'}
-            style={activePage === 'home' ? { color: goldColor, borderColor: goldColor } : {}}
-          >
-            Home
-          </Link>
-
-          <Link 
-            to="/about" 
-            className={activePage === 'about' ? 'border-b pb-1' : 'hover:text-gray-400'}
-            style={activePage === 'about' ? { color: goldColor, borderColor: goldColor } : {}}
-          >
-            About Us
-          </Link>
-
-          <div className="cursor-pointer hover:text-gray-400">Services ▼</div>
-          <div className="cursor-pointer hover:text-gray-400">Portfolio ▼</div>
-
-          <button 
-            className="text-black px-6 py-2 rounded-full font-bold hover:brightness-110 transition"
-            style={{ backgroundColor: goldColor }}
-          >
-            Contact us
-          </button>
-        </div>
-
-        {/* MOBILE BUTTON */}
-        <button 
-          onClick={() => setMenuOpen(!menuOpen)} 
-          className="md:hidden text-2xl"
-        >
-          ☰
-        </button>
+    <>
+      {/* LOGO - FIXED LEFT */}
+      <div className="fixed top-6 left-6 z-50 font-bold tracking-wide text-lg">
+        GLORI
       </div>
 
-      {/* MOBILE MENU */}
-      {menuOpen && (
-        <div className="md:hidden bg-black/95 backdrop-blur-xl px-6 pb-6 space-y-5 text-sm border-t border-gray-800">
-          <Link to="/" className="block hover:text-gray-400">Home</Link>
-          <Link to="/about" className="block hover:text-gray-400">About Us</Link>
-          <div className="hover:text-gray-400">Services</div>
-          <div className="hover:text-gray-400">Portfolio</div>
+      {/* NAVBAR - CENTER */}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-40 bg-transparent">
+        <div className="flex items-center gap-8 px-8 py-4 rounded-full">
 
+          {/* DESKTOP MENU */}
+          <div className="hidden md:flex space-x-8 text-sm font-medium items-center">
+            <Link 
+              to="/"
+              className={`transition-all duration-300 hover:scale-105 hover:text-[#FFB500]
+                ${activePage === 'home' ? 'border-b pb-1' : ''}`}
+              style={activePage === 'home' ? { color: goldColor, borderColor: goldColor } : {}}
+            >
+              Home
+            </Link>
+
+            <Link 
+              to="/about"
+              className={`transition-all duration-300 hover:scale-105 hover:text-[#FFB500]
+                ${activePage === 'about' ? 'border-b pb-1' : ''}`}
+              style={activePage === 'about' ? { color: goldColor, borderColor: goldColor } : {}}
+            >
+              About Us
+            </Link>
+
+            <div className="cursor-pointer hover:text-gray-400">Services ▼</div>
+            <div className="cursor-pointer hover:text-gray-400">Portfolio ▼</div>
+
+            <button
+              className="px-6 py-2 rounded-full font-bold text-white transition-all duration-300 hover:brightness-110"
+              style={{
+                background: "linear-gradient(135deg, #FFB500, #FFDFA3)"
+              }}
+              onClick={() => window.location.href = '/contact'}
+            >
+              Contact Us
+            </button>
+          </div>
+
+          {/* MOBILE BUTTON */}
           <button 
-            className="w-full mt-3 text-black px-6 py-2 rounded-full font-bold"
-            style={{ backgroundColor: goldColor }}
+            onClick={() => setMenuOpen(!menuOpen)} 
+            className="md:hidden text-2xl"
           >
-            Contact us
+            ☰
           </button>
         </div>
-      )}
-    </nav>
+
+        {/* MOBILE MENU */}
+        {menuOpen && (
+          <div className="md:hidden mt-4 bg-black/95 backdrop-blur-xl px-6 pb-6 space-y-5 text-sm rounded-2xl">
+            <Link to="/" className="block hover:text-gray-400">Home</Link>
+            <Link to="/about" className="block hover:text-gray-400">About Us</Link>
+            <div className="hover:text-gray-400">Services</div>
+            <div className="hover:text-gray-400">Portfolio</div>
+
+            <button 
+              className="w-full mt-3 text-white px-6 py-2 rounded-full font-bold"
+              style={{ background: "linear-gradient(135deg, #FFB500, #FFDFA3)" }}
+              onClick={() => window.location.href = '/contact'}
+            >
+              Contact Us
+            </button>
+          </div>
+        )}
+      </nav>
+    </>
   );
 };
 
