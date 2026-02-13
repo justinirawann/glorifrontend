@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = ({ activePage = 'home' }) => {
   const goldColor = "#FFB500";
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/api/services');
+        const data = await response.json();
+        setServices(data);
+      } catch (error) {
+        console.log('Error fetching services:', error);
+      }
+    };
+    fetchServices();
+  }, []);
 
   return (
     <>
@@ -36,7 +51,18 @@ const Navbar = ({ activePage = 'home' }) => {
               About Us
             </Link>
 
-            <div className="cursor-pointer hover:text-gray-400">Services ▼</div>
+            <div className="relative" onMouseEnter={() => setServicesOpen(true)} onMouseLeave={() => setServicesOpen(false)}>
+              <div className="cursor-pointer hover:text-[#FFB500] transition-all duration-300">Services ▼</div>
+              {servicesOpen && services.length > 0 && (
+                <div className="absolute top-full mt-2 bg-black/95 backdrop-blur-xl rounded-xl py-2 min-w-[200px] shadow-xl">
+                  {services.map((service) => (
+                    <div key={service.id} className="px-4 py-2 hover:bg-white/10 cursor-pointer transition-all">
+                      {service.name}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             <div className="cursor-pointer hover:text-gray-400">Portfolio ▼</div>
 
             <button
