@@ -5,18 +5,46 @@
   const AboutUs = () => {
     const goldColor = "#FFB500";
     const [clientLogos, setClientLogos] = useState([]);
+    const [aboutImages, setAboutImages] = useState({ hero: null, closing: null });
+    const [isLoading, setIsLoading] = useState(true);
+    const [isDarkNav, setIsDarkNav] = useState(false);
 
     useEffect(() => {
-      const fetchLogos = async () => {
+      const fetchAllData = async () => {
         try {
-          const response = await fetch('http://localhost:8000/api/client-logos');
-          const data = await response.json();
-          setClientLogos(data);
+          const [logosRes, imagesRes] = await Promise.all([
+            fetch('http://localhost:8000/api/client-logos'),
+            fetch('http://localhost:8000/api/about-images')
+          ]);
+          
+          const [logosData, imagesData] = await Promise.all([
+            logosRes.json(),
+            imagesRes.json()
+          ]);
+          
+          setClientLogos(logosData);
+          setAboutImages(imagesData);
         } catch (error) {
-          console.log('Error fetching client logos:', error);
+          console.log('Error fetching data:', error);
+        } finally {
+          setIsLoading(false);
         }
       };
-      fetchLogos();
+      
+      fetchAllData();
+    }, []);
+
+    useEffect(() => {
+      const handleScroll = () => {
+        const whiteSection = document.getElementById('white-section');
+        if (whiteSection) {
+          const rect = whiteSection.getBoundingClientRect();
+          setIsDarkNav(rect.top < 100 && rect.bottom > 100);
+        }
+      };
+      
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const workSteps = [
@@ -41,7 +69,7 @@
     return (
       <div className="bg-black text-white font-sans">
         
-        <Navbar activePage="about" />
+        <Navbar activePage="about" isDark={isDarkNav} />
         
         {/* --- SECTION 1: HERO --- */}
         <section className="relative min-h-screen flex flex-col justify-center px-12 md:px-24 pt-24">
@@ -106,7 +134,7 @@
             <div className="hidden md:block relative w-full md:w-[78%] h-[520px] rounded-[50px] shadow-2xl bg-black">
               <div className="relative w-full h-full overflow-hidden rounded-[50px]">
                 <img 
-                  src="/interior-hero.jpg" 
+                  src={aboutImages.hero?.image_path ? `http://localhost:8000/storage/${aboutImages.hero.image_path}` : '/interior-hero.jpg'}
                   alt="Interior Design" 
                   className="w-full h-full object-cover scale-[1.05]"
                 />
@@ -124,7 +152,7 @@
             {/* MOBILE / TABLET VERSION (SIMPLE BOX HERO) */}
             <div className="block md:hidden w-full mt-6 rounded-2xl overflow-hidden shadow-xl">
               <img 
-                src="/interior-hero.jpg" 
+                src={aboutImages.hero?.image_path ? `http://localhost:8000/storage/${aboutImages.hero.image_path}` : '/interior-hero.jpg'}
                 alt="Interior Design Mobile" 
                 className="w-full h-[260px] object-cover"
               />
@@ -212,7 +240,7 @@
         </section>
 
         {/* --- SECTION 3: THE WAY WE WORK --- */}
-          <section className="bg-white text-black py-32 px-12 md:px-24 min-h-screen relative overflow-hidden pb-48">
+          <section id="white-section" className="bg-white text-black py-32 px-12 md:px-24 min-h-screen relative overflow-hidden pb-48">
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-20 relative z-10">
               <h2 className="text-6xl font-serif" data-aos="fade-right">
@@ -523,7 +551,11 @@
 
           {/* CLOSING SECTION — TIDAK DIUBAH */}
           <div className="relative h-[600px] w-full flex items-center justify-center overflow-hidden rounded-3xl mt-24" data-aos="zoom-in-up">
-            <img src="/closing-bg.jpg" className="absolute inset-0 w-full h-full object-cover brightness-50" alt="background" />
+            <img 
+              src={aboutImages.closing?.image_path ? `http://localhost:8000/storage/${aboutImages.closing.image_path}` : '/closing-bg.jpg'}
+              className="absolute inset-0 w-full h-full object-cover brightness-50" 
+              alt="background" 
+            />
             <div className="relative z-10 max-w-3xl px-6" data-aos="fade-up" data-aos-delay="200">
               <h2 className="text-4xl md:text-4xl font-serif leading-tight">
                 Your vision deserves the right partner. <br />

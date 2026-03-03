@@ -68,11 +68,38 @@ const ContactUs = () => {
                 <stop offset="100%" style={{ stopColor: '#FF8C00', stopOpacity: 0.4 }} />
               </linearGradient>
             </defs>
-            <path d="M 0 200 Q 400 100 800 250 T 1600 200" stroke="url(#goldGradContact)" strokeWidth="8" fill="none" filter="url(#glowContact)" />
-            <path d="M 300 0 Q 600 300 1000 150 T 1800 100" stroke="url(#goldGradContact)" strokeWidth="6" fill="none" filter="url(#glowContact)" />
-            <line x1="200" y1="0" x2="400" y2="600" stroke="#FFB500" strokeWidth="4" filter="url(#glowContact)" />
+            <path className="animate-contact-1" d="M 0 200 Q 400 100 800 250 T 1600 200" stroke="url(#goldGradContact)" strokeWidth="8" fill="none" filter="url(#glowContact)" />
+            <path className="animate-contact-2" d="M 300 0 Q 600 300 1000 150 T 1800 100" stroke="url(#goldGradContact)" strokeWidth="6" fill="none" filter="url(#glowContact)" />
+            <line className="animate-contact-3" x1="200" y1="0" x2="400" y2="600" stroke="#FFB500" strokeWidth="4" filter="url(#glowContact)" />
           </svg>
         </div>
+
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes contact-move-1 {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(40px) translateY(-20px); }
+            50% { transform: translateX(0) translateY(20px); }
+            75% { transform: translateX(-40px) translateY(-10px); }
+          }
+          @keyframes contact-move-2 {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            33% { transform: translateY(30px) translateX(-30px); }
+            66% { transform: translateY(-30px) translateX(30px); }
+          }
+          @keyframes contact-pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.9; }
+          }
+          .animate-contact-1 {
+            animation: contact-move-1 12s ease-in-out infinite;
+          }
+          .animate-contact-2 {
+            animation: contact-move-2 15s ease-in-out infinite;
+          }
+          .animate-contact-3 {
+            animation: contact-pulse 4s ease-in-out infinite;
+          }
+        `}} />
 
         <div className="relative z-10 max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           

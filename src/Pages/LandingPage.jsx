@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 
 /* ================= INFINITE COLUMN ================= */
@@ -31,12 +32,8 @@ const InfiniteColumn = ({ images, speed = 40, delay = 0 }) => {
 
 /* ================= LANDING PAGE ================= */
 const LandingPage = () => {
-  const expertise = [
-    "Interior Design",
-    "IT Solutions",
-    "Preparation Land",
-    "Civil",
-  ];
+  const [expertise, setExpertise] = useState([]);
+  const [services, setServices] = useState([]);
 
   const [images, setImages] = useState([]);
   const goldColor = "#FFB500";
@@ -59,7 +56,23 @@ const LandingPage = () => {
       }
     };
 
+    const fetchServices = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/services");
+        const data = await response.json();
+        if (data.length > 0) {
+          setServices(data);
+          setExpertise(data.map(service => service.name));
+        } else {
+          setExpertise(["Interior Design", "IT Solutions", "Preparation Land", "Civil"]);
+        }
+      } catch (error) {
+        setExpertise(["Interior Design", "IT Solutions", "Preparation Land", "Civil"]);
+      }
+    };
+
     fetchImages();
+    fetchServices();
   }, []);
 
   return (
@@ -90,7 +103,7 @@ const LandingPage = () => {
         <div className="max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
           
           {/* HERO TITLE */}
-          <h1 className="hero-title text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-serif font-medium leading-tight mb-6 tracking-tight">
+          <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-serif font-medium leading-tight mb-6 tracking-tight">
             You Dream It
             <br />
             We Build It
@@ -112,23 +125,40 @@ const LandingPage = () => {
             </h3>
 
             <ul className="max-w-lg mx-auto lg:mx-0">
-              {expertise.map((item, index) => (
-                <li
-                  key={index}
-                  className="expert-item group border-t border-gray-700 py-4 flex items-center justify-center lg:justify-start cursor-pointer hover:bg-white/5 transition-all"
-                  style={{ animationDelay: `${0.6 + index * 0.15}s` }}
-                >
-                  <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-serif flex items-center transition-all duration-300 group-hover:italic group-hover:text-yellow-500">
-                    <span className="w-2 h-2 border border-white rounded-full mr-6 transition-all group-hover:border-yellow-500 group-hover:scale-125" />
-                    <span className="transition-transform duration-300 group-hover:translate-x-1">
-                      {item}
-                    </span>
-                    <span className="ml-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-10px] group-hover:translate-x-0 text-yellow-500">
-                      →
-                    </span>
-                  </span>
-                </li>
-              ))}
+              {expertise.map((item, index) => {
+                const service = services.find(s => s.name === item);
+                return (
+                  <li
+                    key={index}
+                    className="expert-item group border-t border-gray-700 py-4 flex items-center justify-center lg:justify-start cursor-pointer hover:bg-white/5 transition-all"
+                    style={{ animationDelay: `${0.6 + index * 0.15}s` }}
+                  >
+                    {service ? (
+                      <Link to={`/services/${service.id}`} className="w-full">
+                        <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-serif flex items-center transition-all duration-300 group-hover:italic group-hover:text-yellow-500">
+                          <span className="w-2 h-2 border border-white rounded-full mr-6 transition-all group-hover:border-yellow-500 group-hover:scale-125" />
+                          <span className="transition-transform duration-300 group-hover:translate-x-1">
+                            {item}
+                          </span>
+                          <span className="ml-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-10px] group-hover:translate-x-0 text-yellow-500">
+                            →
+                          </span>
+                        </span>
+                      </Link>
+                    ) : (
+                      <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-serif flex items-center transition-all duration-300 group-hover:italic group-hover:text-yellow-500">
+                        <span className="w-2 h-2 border border-white rounded-full mr-6 transition-all group-hover:border-yellow-500 group-hover:scale-125" />
+                        <span className="transition-transform duration-300 group-hover:translate-x-1">
+                          {item}
+                        </span>
+                        <span className="ml-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-10px] group-hover:translate-x-0 text-yellow-500">
+                          →
+                        </span>
+                      </span>
+                    )}
+                  </li>
+                );
+              })}
               <div className="border-t border-gray-700" />
             </ul>
           </div>
