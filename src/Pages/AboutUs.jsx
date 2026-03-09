@@ -131,32 +131,36 @@
           <div className="relative w-full flex justify-end z-10 mt-1" data-aos="fade-left" data-aos-delay="200">
 
             {/* DESKTOP / LAPTOP VERSION (MASKED HERO) */}
-            <div className="hidden md:block relative w-full md:w-[78%] h-[520px] rounded-[50px] shadow-2xl bg-black">
-              <div className="relative w-full h-full overflow-hidden rounded-[50px]">
-                <img 
-                  src={aboutImages.hero?.image_path ? `http://localhost:8000/storage/${aboutImages.hero.image_path}` : '/interior-hero.jpg'}
-                  alt="Interior Design" 
-                  className="w-full h-full object-cover scale-[1.05]"
-                />
+            {aboutImages.hero?.image_path && (
+              <div className="hidden md:block relative w-full md:w-[78%] h-[520px] rounded-[50px] shadow-2xl bg-black">
+                <div className="relative w-full h-full overflow-hidden rounded-[50px]">
+                  <img 
+                    src={`http://localhost:8000/storage/${aboutImages.hero.image_path}`}
+                    alt="Interior Design" 
+                    className="w-full h-full object-cover scale-[1.05]"
+                  />
 
-                {/* MASKING CEKUNG */}
-                <div className="absolute top-0 left-0 w-[180px] h-[80px] bg-black rounded-br-[50px] z-20">
-                  <div className="absolute -right-[20px] top-0 w-[20px] h-[20px] rounded-tl-[20px] shadow-[-10px_-10px_0_10px_black] z-30"></div>
-                  <div className="absolute left-0 -bottom-[20px] w-[20px] h-[20px] rounded-tl-[20px] shadow-[-10px_-10px_0_10px_black] z-30"></div>
+                  {/* MASKING CEKUNG */}
+                  <div className="absolute top-0 left-0 w-[180px] h-[80px] bg-black rounded-br-[50px] z-20">
+                    <div className="absolute -right-[20px] top-0 w-[20px] h-[20px] rounded-tl-[20px] shadow-[-10px_-10px_0_10px_black] z-30"></div>
+                    <div className="absolute left-0 -bottom-[20px] w-[20px] h-[20px] rounded-tl-[20px] shadow-[-10px_-10px_0_10px_black] z-30"></div>
+                  </div>
+
                 </div>
-
               </div>
-            </div>
+            )}
 
 
             {/* MOBILE / TABLET VERSION (SIMPLE BOX HERO) */}
-            <div className="block md:hidden w-full mt-6 rounded-2xl overflow-hidden shadow-xl">
-              <img 
-                src={aboutImages.hero?.image_path ? `http://localhost:8000/storage/${aboutImages.hero.image_path}` : '/interior-hero.jpg'}
-                alt="Interior Design Mobile" 
-                className="w-full h-[260px] object-cover"
-              />
-            </div>
+            {aboutImages.hero?.image_path && (
+              <div className="block md:hidden w-full mt-6 rounded-2xl overflow-hidden shadow-xl">
+                <img 
+                  src={`http://localhost:8000/storage/${aboutImages.hero.image_path}`}
+                  alt="Interior Design Mobile" 
+                  className="w-full h-[260px] object-cover"
+                />
+              </div>
+            )}
 
           </div>
 
@@ -549,36 +553,38 @@
             }
           `}} />
 
-          {/* CLOSING SECTION — TIDAK DIUBAH */}
-          <div className="relative h-[600px] w-full flex items-center justify-center overflow-hidden rounded-3xl mt-24" data-aos="zoom-in-up">
-            <img 
-              src={aboutImages.closing?.image_path ? `http://localhost:8000/storage/${aboutImages.closing.image_path}` : '/closing-bg.jpg'}
-              className="absolute inset-0 w-full h-full object-cover brightness-50" 
-              alt="background" 
-            />
-            <div className="relative z-10 max-w-3xl px-6" data-aos="fade-up" data-aos-delay="200">
-              <h2 className="text-4xl md:text-4xl font-serif leading-tight">
-                Your vision deserves the right partner. <br />
-                Let's <span className="italic" style={{
-                            backgroundImage: "linear-gradient(135deg, #FFB500, #FFDFA3)",
-                            backgroundClip: "text",
-                            WebkitBackgroundClip: "text",
-                            color: "transparent"
-                          }}>make it happen</span> together.
-              </h2>
-              <button 
-                className="mt-12 relative px-8 py-3 rounded-lg font-semibold text-white text-base transition-all hover:scale-105"
-                style={{
-                  background: 'rgba(255, 255, 255, 0.4)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid rgba(255, 208, 0, 0.49)',
-                  boxShadow: `0 0 30px ${goldColor}80, 0 0 60px ${goldColor}40`
-                }}
-              >
-                Start Project
-              </button>
+          {/* CLOSING SECTION */}
+          {aboutImages.closing?.image_path && (
+            <div className="relative h-[600px] w-full flex items-center justify-center overflow-hidden rounded-3xl mt-24" data-aos="zoom-in-up">
+              <img 
+                src={`http://localhost:8000/storage/${aboutImages.closing.image_path}`}
+                className="absolute inset-0 w-full h-full object-cover brightness-50" 
+                alt="background" 
+              />
+              <div className="relative z-10 max-w-3xl px-6" data-aos="fade-up" data-aos-delay="200">
+                <h2 className="text-4xl md:text-4xl font-serif leading-tight">
+                  Your vision deserves the right partner. <br />
+                  Let's <span className="italic" style={{
+                              backgroundImage: "linear-gradient(135deg, #FFB500, #FFDFA3)",
+                              backgroundClip: "text",
+                              WebkitBackgroundClip: "text",
+                              color: "transparent"
+                            }}>make it happen</span> together.
+                </h2>
+                <button 
+                  className="mt-12 relative px-8 py-3 rounded-lg font-semibold text-white text-base transition-all hover:scale-105"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.4)',
+                    backdropFilter: 'blur(10px)',
+                    border: '1px solid rgba(255, 208, 0, 0.49)',
+                    boxShadow: `0 0 30px ${goldColor}80, 0 0 60px ${goldColor}40`
+                  }}
+                >
+                  Start Project
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
         </section>
 

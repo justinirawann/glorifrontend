@@ -76,6 +76,9 @@ const ServicesPages = () => {
     ? allProjects 
     : allProjects.filter(p => p.category === activeCategory);
 
+  // Limit to 6 projects
+  const displayedProjects = filteredProjects.slice(0, 6);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: { opacity: 1, transition: { staggerChildren: 0.1 } }
@@ -316,7 +319,7 @@ const ServicesPages = () => {
             className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20 max-w-7xl mx-auto"
           >
             <AnimatePresence mode='popLayout'>
-              {filteredProjects.map((project, idx) => (
+              {displayedProjects.map((project, idx) => (
                 <Link 
                   key={`${project.title}-${idx}`}
                   to={`/portfolio/detail/${project.id}`}
@@ -351,6 +354,32 @@ const ServicesPages = () => {
               </Link>
               ))}
             </AnimatePresence>
+          </motion.div>
+        )}
+
+        {/* See More Button */}
+        {allProjects.length > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            className="flex justify-center mt-20"
+          >
+            <Link 
+              to={`/portfolio/${id}`}
+              className="group inline-flex items-center gap-4 px-10 py-5 border border-yellow-600/30 hover:border-yellow-600 transition-all duration-500 hover:bg-yellow-600/5"
+            >
+              <span className="text-xs tracking-[0.3em] uppercase text-gray-400 group-hover:text-yellow-500 transition-colors">
+                See More Projects
+              </span>
+              <motion.span 
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="text-lg text-gray-400 group-hover:text-yellow-500 transition-colors"
+              >
+                →
+              </motion.span>
+            </Link>
           </motion.div>
         )}
       </section>

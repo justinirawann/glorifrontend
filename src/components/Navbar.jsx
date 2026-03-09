@@ -32,7 +32,7 @@ const Navbar = ({ activePage = 'home', isDark = false }) => {
     <>
       {/* LOGO - Pojok Kiri */}
       <div className="fixed top-6 left-6 z-50">
-        <img src={isDark ? '/logo2.png' : '/logo.jpg'} alt="Logo" className="h-20 w-auto" />
+        <img src={isDark ? '/logo2.PNG' : '/logo.PNG'} alt="Logo" className="h-20 w-auto" />
       </div>
 
       {/* NAVBAR CONTAINER */}

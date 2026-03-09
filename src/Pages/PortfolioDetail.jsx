@@ -7,7 +7,8 @@ const PortfolioDetail = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState(null);
-  const [selectedImg, setSelectedImg] = useState(null); // State buat nyimpen foto yang lagi di-zoom
+  const [selectedImg, setSelectedImg] = useState(null);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -33,10 +34,31 @@ const PortfolioDetail = () => {
 
   // Check if images exist
   const hasImages = project.displayed_images && project.displayed_images.length === 5;
+  const allImages = project.images || [];
+  const displayedIds = project.displayed_images ? project.displayed_images.map(img => img.id) : [];
+  const remainingImages = allImages.filter(img => !displayedIds.includes(img.id));
+  
+  console.log('All images:', allImages.length);
+  console.log('Displayed images:', displayedIds.length);
+  console.log('Remaining images:', remainingImages.length);
+  console.log('Remaining data:', remainingImages);
 
   return (
     <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-yellow-600/30 overflow-x-hidden">
       <Navbar activePage="portfolio" />
+
+      {/* --- BACK BUTTON (TOP LEFT) --- */}
+      <div className="fixed top-24 left-8 z-50">
+        <button onClick={() => navigate(-1)} className="group flex items-center gap-2">
+          <motion.span 
+            whileHover={{ scale: 1.2 }}
+            className="text-xl text-gray-400 group-hover:text-yellow-500 transition-colors duration-300"
+          >
+            ←
+          </motion.span>
+          <span className="text-[10px] uppercase tracking-[0.3em] text-gray-500 group-hover:text-yellow-500 transition-colors font-bold">Back</span>
+        </button>
+      </div>
 
       {/* --- MODAL (LIGHTBOX) --- */}
       <AnimatePresence>
@@ -124,15 +146,59 @@ const PortfolioDetail = () => {
           </div>
         )}
 
-        {/* --- BACK BUTTON --- */}
-        <div className="mt-40 flex justify-center">
-          <button onClick={() => navigate(-1)} className="group flex flex-col items-center gap-6">
-            <div className="w-16 h-16 border border-white/10 rounded-full flex items-center justify-center group-hover:border-yellow-600 group-hover:bg-yellow-600/10 transition-all duration-700">
-              <span className="text-xl group-hover:translate-x-[-4px] transition-transform">←</span>
-            </div>
-            <span className="text-[10px] uppercase tracking-[0.5em] text-gray-500 group-hover:text-yellow-500 transition-colors font-bold">Back to Portfolio</span>
-          </button>
-        </div>
+        {/* --- SEE MORE BUTTON --- */}
+        {remainingImages.length > 0 && !showMore && (
+          <div className="mt-20 flex justify-center">
+            <button 
+              onClick={() => setShowMore(true)}
+              className="group flex flex-col items-center gap-4"
+            >
+              <div className="w-16 h-16 border border-white/10 rounded-full flex items-center justify-center group-hover:border-yellow-600 group-hover:bg-yellow-600/10 transition-all duration-700">
+                <motion.span 
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="text-xl"
+                >
+                  ↓
+                </motion.span>
+              </div>
+              <span className="text-[10px] uppercase tracking-[0.5em] text-gray-500 group-hover:text-yellow-500 transition-colors font-bold">
+                See More ({remainingImages.length})
+              </span>
+            </button>
+          </div>
+        )}
+
+        {/* --- REMAINING IMAGES GRID --- */}
+        <AnimatePresence>
+          {showMore && remainingImages.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
+              {remainingImages.map((image, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  onClick={() => setSelectedImg(`http://localhost:8000/storage/${image.image_path}`)}
+                  className="aspect-[4/3] bg-zinc-900 overflow-hidden cursor-zoom-in group"
+                >
+                  <motion.img
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.8 }}
+                    src={`http://localhost:8000/storage/${image.image_path}`}
+                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );

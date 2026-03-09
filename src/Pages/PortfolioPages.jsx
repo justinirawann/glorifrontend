@@ -245,7 +245,7 @@ const PortfolioPages = () => {
                       
                       {/* Circle Arrow (Centered Below Text) */}
                       <div className="pt-4">
-                        <div className="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center group-hover:border-yellow-600 group-hover:text-yellow-500 transition-all duration-500 transform group-hover:rotate-45">
+                        <div className="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center group-hover:border-yellow-600 group-hover:text-yellow-500 transition-all duration-500 group-hover:scale-110">
                           →
                         </div>
                       </div>
