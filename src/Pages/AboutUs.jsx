@@ -7,7 +7,6 @@
     const [clientLogos, setClientLogos] = useState([]);
     const [aboutImages, setAboutImages] = useState({ hero: null, closing: null });
     const [isLoading, setIsLoading] = useState(true);
-    const [isDarkNav, setIsDarkNav] = useState(false);
 
     useEffect(() => {
       const fetchAllData = async () => {
@@ -34,19 +33,6 @@
       fetchAllData();
     }, []);
 
-    useEffect(() => {
-      const handleScroll = () => {
-        const whiteSection = document.getElementById('white-section');
-        if (whiteSection) {
-          const rect = whiteSection.getBoundingClientRect();
-          setIsDarkNav(rect.top < 100 && rect.bottom > 100);
-        }
-      };
-      
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
     const workSteps = [
       {
         title: "Careful Planning",
@@ -69,7 +55,7 @@
     return (
       <div className="bg-black text-white font-sans">
         
-        <Navbar activePage="about" isDark={isDarkNav} />
+        <Navbar activePage="about" />
         
         {/* --- SECTION 1: HERO --- */}
         <section className="relative min-h-screen flex flex-col justify-center px-12 md:px-24 pt-24">
@@ -243,174 +229,130 @@
           </div>
         </section>
 
-        {/* --- SECTION 3: THE WAY WE WORK --- */}
-          <section id="white-section" className="bg-white text-black py-32 px-12 md:px-24 min-h-screen relative overflow-hidden pb-48">
+        {/* --- SECTION 3 + 4: THE WAY WE WORK + STATS (DIGABUNG) --- */}
+        <section id="white-section" className="bg-black text-white relative overflow-hidden">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-20 relative z-10">
-              <h2 className="text-6xl font-serif" data-aos="fade-right">
-              The Way <br /> We Work
-              </h2>
-
-              <div className="space-y-12">
-              {workSteps.map((step, idx) => (
-                  <div key={idx} className="border-b border-gray-300 pb-8" data-aos="fade-up" data-aos-delay={idx * 100}>
-                  <h3 className="text-2xl font-serif mb-4">{step.title}</h3>
-                  <p className="text-gray-600 max-w-md">{step.desc}</p>
-                  </div>
-              ))}
-              </div>
-          </div>
-
-          {/* --- BOTTOM INFINITE MARQUEE --- */}
-          <div className="absolute bottom-0 left-0 w-full overflow-hidden opacity-80 pointer-events-none">
-            <div className="marquee-track">
-              <span className="marquee-text">
-                ONE STEP SOLUTIONS — ONE STEP SOLUTIONS — ONE STEP SOLUTIONS — ONE STEP SOLUTIONS — 
-              </span>
-              <span className="marquee-text">
-                ONE STEP SOLUTIONS — ONE STEP SOLUTIONS — ONE STEP SOLUTIONS — ONE STEP SOLUTIONS — 
-              </span>
-            </div>
-          </div>
-
-
-          {/* --- STYLE --- */}
-          <style dangerouslySetInnerHTML={{ __html: `
-            .marquee-track {
-              display: flex;
-              width: max-content;
-              animation: marquee 12s linear infinite;
-            }
-
-            .marquee-text {
-              font-size: clamp(36px, 12vw, 120px);
-              font-weight: 500; /* lebih kurus = lebih tajem */
-              white-space: nowrap;
-
-              color: white;
-
-              -webkit-text-stroke: 2px #FFD700; 
-
-              text-shadow: none;
-              padding-right: 40px;
-              font-weight: 500;
-              text-rendering: geometricPrecision;
-              -webkit-font-smoothing: none;
-            }
-
-            
-
-
-            @keyframes marquee {
-              from { transform: translateX(0); }
-              to { transform: translateX(-50%); }
-            }
-          `}} />
-
-
-          </section>
-
-
-      {/* --- SECTION 4: STATS --- */}
-          <section className="relative py-28 border-y border-gray-800 bg-black overflow-hidden">
-
-          {/* BACKGROUND EFFECT - ANIMATED GOLD LINES */}
-          <div className="absolute inset-0 opacity-40">
+          {/* GOLD LINES — SHARED BACKGROUND, MEREMBES DARI BAWAH KE ATAS */}
+          <div className="absolute inset-0 opacity-40 pointer-events-none">
             <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <filter id="glow">
+                <filter id="glowMerge">
                   <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
                   <feMerge>
                     <feMergeNode in="coloredBlur"/>
                     <feMergeNode in="SourceGraphic"/>
                   </feMerge>
                 </filter>
-                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style={{ stopColor: '#FFB500', stopOpacity: 0.8 }} />
-                  <stop offset="100%" style={{ stopColor: '#FF8C00', stopOpacity: 0.4 }} />
+                <linearGradient id="goldGradMerge" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{ stopColor: '#FFB500', stopOpacity: 0.9 }} />
+                  <stop offset="100%" style={{ stopColor: '#FF8C00', stopOpacity: 0.2 }} />
                 </linearGradient>
               </defs>
-              <path className="animate-snake-stats-1" d="M 0 100 Q 300 50 600 150 T 1200 100" stroke="url(#goldGrad)" strokeWidth="8" fill="none" filter="url(#glow)" />
-              <path className="animate-snake-stats-2" d="M 200 0 Q 500 200 800 100 T 1400 50" stroke="url(#goldGrad)" strokeWidth="6" fill="none" filter="url(#glow)" />
-              <path className="animate-snake-stats-3" d="M -100 300 Q 400 250 700 350 T 1300 300" stroke="url(#goldGrad)" strokeWidth="10" fill="none" filter="url(#glow)" />
-              <line className="animate-pulse-1" x1="100" y1="0" x2="300" y2="400" stroke="#FFB500" strokeWidth="4" filter="url(#glow)" />
-              <line className="animate-pulse-2" x1="900" y1="0" x2="1100" y2="500" stroke="#FF8C00" strokeWidth="5" filter="url(#glow)" />
+              {/* Lines dari bawah naik ke atas */}
+              <path className="animate-snake-stats-1" d="M 0 100% Q 300 80% 600 60% T 1200 40%" stroke="url(#goldGradMerge)" strokeWidth="8" fill="none" filter="url(#glowMerge)" />
+              <path className="animate-snake-stats-2" d="M 0 900 Q 400 700 800 500 T 1600 200" stroke="url(#goldGradMerge)" strokeWidth="6" fill="none" filter="url(#glowMerge)" />
+              <path className="animate-snake-stats-3" d="M 200 1000 Q 600 750 1000 500 T 1800 100" stroke="url(#goldGradMerge)" strokeWidth="10" fill="none" filter="url(#glowMerge)" />
+              <line className="animate-pulse-1" x1="100" y1="100%" x2="300" y2="0" stroke="#FFB500" strokeWidth="4" filter="url(#glowMerge)" />
+              <line className="animate-pulse-2" x1="900" y1="100%" x2="1100" y2="0" stroke="#FF8C00" strokeWidth="5" filter="url(#glowMerge)" />
             </svg>
           </div>
 
           <style dangerouslySetInnerHTML={{ __html: `
-            .animate-snake-stats-1 {
-              animation: snake-stats-1 12s ease-in-out infinite;
-            }
-            .animate-snake-stats-2 {
-              animation: snake-stats-2 15s ease-in-out infinite;
-            }
-            .animate-snake-stats-3 {
-              animation: snake-stats-3 18s ease-in-out infinite;
-            }
-            .animate-pulse-1 {
-              animation: pulse-line 4s ease-in-out infinite;
-            }
-            .animate-pulse-2 {
-              animation: pulse-line 5s ease-in-out infinite 1s;
-            }
+            .animate-snake-stats-1 { animation: snake-stats-1 12s ease-in-out infinite; }
+            .animate-snake-stats-2 { animation: snake-stats-2 15s ease-in-out infinite; }
+            .animate-snake-stats-3 { animation: snake-stats-3 18s ease-in-out infinite; }
+            .animate-pulse-1 { animation: pulse-line 4s ease-in-out infinite; }
+            .animate-pulse-2 { animation: pulse-line 5s ease-in-out infinite 1s; }
             @keyframes snake-stats-1 {
               0%, 100% { transform: translateY(0) translateX(0); }
-              25% { transform: translateY(-20px) translateX(10px); }
-              50% { transform: translateY(0) translateX(20px); }
-              75% { transform: translateY(20px) translateX(10px); }
+              50% { transform: translateY(-30px) translateX(20px); }
             }
             @keyframes snake-stats-2 {
               0%, 100% { transform: translateY(0) translateX(0); }
-              33% { transform: translateY(15px) translateX(-15px); }
-              66% { transform: translateY(-15px) translateX(15px); }
+              50% { transform: translateY(25px) translateX(-20px); }
             }
             @keyframes snake-stats-3 {
               0%, 100% { transform: translateY(0) translateX(0); }
-              50% { transform: translateY(-25px) translateX(-20px); }
+              50% { transform: translateY(-20px) translateX(-15px); }
             }
             @keyframes pulse-line {
-              0%, 100% { opacity: 0.3; stroke-width: 4; }
-              50% { opacity: 1; stroke-width: 6; }
+              0%, 100% { opacity: 0.3; }
+              50% { opacity: 1; }
+            }
+            .marquee-track {
+              display: flex;
+              width: max-content;
+              animation: marquee 12s linear infinite;
+            }
+            .marquee-text {
+              font-size: clamp(36px, 12vw, 120px);
+              font-weight: 500;
+              white-space: nowrap;
+              color: transparent;
+              -webkit-text-stroke: 2px #FFD700;
+              padding-right: 40px;
+            }
+            @keyframes marquee {
+              from { transform: translateX(0); }
+              to { transform: translateX(-50%); }
             }
           `}} />
 
-          {/* --- CONTENT --- */}
-          <div className="px-12 md:px-24 grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+          {/* THE WAY WE WORK */}
+          <div className="py-32 px-12 md:px-24 min-h-screen relative pb-48">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-20 relative z-10">
+              <h2 className="text-6xl font-serif" data-aos="fade-right">The Way <br /> We Work</h2>
+              <div className="space-y-12">
+                {workSteps.map((step, idx) => (
+                  <div key={idx} className="border-b border-gray-700 pb-8" data-aos="fade-up" data-aos-delay={idx * 100}>
+                    <h3 className="text-2xl font-serif mb-4">{step.title}</h3>
+                    <p className="text-gray-400 max-w-md">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
+            {/* MARQUEE */}
+            <div className="absolute bottom-0 left-0 w-full overflow-hidden opacity-80 pointer-events-none">
+              <div className="marquee-track">
+                <span className="marquee-text">ONE STOP SOLUTIONS — ONE STOP SOLUTIONS — ONE STOP SOLUTIONS — ONE STOP SOLUTIONS — </span>
+                <span className="marquee-text">ONE STOP SOLUTIONS — ONE STOP SOLUTIONS — ONE STOP SOLUTIONS — ONE STOP SOLUTIONS — </span>
+              </div>
+            </div>
+          </div>
+
+          {/* STATS */}
+          <div className="py-28 px-12 md:px-24 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               <div className="flex items-start gap-6" data-aos="fade-up">
-              <span className="text-7xl font-light">7+</span>
-              <p className="text-sm text-gray-400 mt-2 uppercase tracking-widest leading-tight">
-                  Years of experience,<br/>
-                  Delivering reliable solutions across projects since 2018.
-              </p>
+                <span className="text-7xl font-light">7+</span>
+                <p className="text-sm text-gray-400 mt-2 uppercase tracking-widest leading-tight">
+                  Years of experience,<br/>Delivering reliable solutions across projects since 2018.
+                </p>
               </div>
-
               <div className="flex flex-col items-center text-center border-x border-gray-800 px-8" data-aos="fade-up" data-aos-delay="100">
-              <h3 className="text-3xl font-serif mb-2">End-to-end</h3>
-              <p className="text-xs text-gray-400 uppercase tracking-widest max-w-xs">
+                <h3 className="text-3xl font-serif mb-2">End-to-end</h3>
+                <p className="text-xs text-gray-400 uppercase tracking-widest max-w-xs">
                   Integrated solutions. Managing every stage from land preparation to fully functional spaces.
-              </p>
+                </p>
               </div>
-
               <div className="flex items-start gap-6" data-aos="fade-up" data-aos-delay="200">
-              <span className="text-3xl font-serif mb-2">Quality & Reliability</span>
-              <p className="text-sm text-gray-400 mt-2 uppercase tracking-widest leading-tight">
+                <span className="text-3xl font-serif mb-2">Quality & Reliability</span>
+                <p className="text-sm text-gray-400 mt-2 uppercase tracking-widest leading-tight">
                   Committed to consistent results through professional execution and trusted service.
-              </p>
+                </p>
               </div>
+            </div>
 
-          </div>
-
-          {/* --- QUOTE --- */}
-          <div className="mt-24 text-center px-12 relative z-10" data-aos="zoom-in">
+            <div className="mt-24 text-center" data-aos="zoom-in">
               <p className="text-2xl md:text-3xl font-serif italic max-w-4xl mx-auto leading-relaxed">
-              Our goal is not only to complete projects, but to build long-term trust through{" "}
-              <span className="text-gray-400">consistent results and dependable service.</span>
+                Our goal is not only to complete projects, but to build long-term trust through{" "}
+                <span className="text-gray-400">consistent results and dependable service.</span>
               </p>
+            </div>
           </div>
 
-          </section>
+        </section>
 
 
 

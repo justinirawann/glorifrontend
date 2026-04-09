@@ -74,6 +74,15 @@ const Navbar = ({ activePage = 'home', isDark = false }) => {
               About Us
             </Link>
 
+            <Link 
+              to="/testimoni"
+              className={`transition-all duration-300 hover:scale-105 ${hoverColor}
+                ${activePage === 'testimoni' ? 'border-b pb-1' : ''}`}
+              style={activePage === 'testimoni' ? { color: goldColor, borderColor: goldColor } : {}}
+            >
+              Testimoni
+            </Link>
+
             {/* Dropdown Services Desktop */}
             <div className="relative z-50">
               <div 
@@ -143,6 +152,7 @@ const Navbar = ({ activePage = 'home', isDark = false }) => {
           <div className="md:hidden mt-2 bg-transparent px-2 py-4 space-y-4 text-right">
             <Link to="/" onClick={() => setMenuOpen(false)} className={`block ${mobileText} text-lg font-medium drop-shadow-md`}>Home</Link>
             <Link to="/about" onClick={() => setMenuOpen(false)} className={`block ${mobileText} text-lg font-medium drop-shadow-md`}>About Us</Link>
+            <Link to="/testimoni" onClick={() => setMenuOpen(false)} className={`block ${mobileText} text-lg font-medium drop-shadow-md`}>Testimoni</Link>
             
             {/* Services Mobile Dropdown */}
             <div>

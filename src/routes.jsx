@@ -5,6 +5,7 @@ import ContactUs from "./Pages/ContactUs.jsx"
 import ServicesPages from "./Pages/ServicesPages.jsx"
 import PortfolioPages from "./Pages/PortfolioPages.jsx"
 import PortfolioDetail from "./Pages/PortfolioDetail.jsx"
+import TestimoniPages from "./Pages/TestimoniPages.jsx"
 
 export default function AppRoutes() {
   return (
@@ -16,6 +17,7 @@ export default function AppRoutes() {
         <Route path="/services/:id" element={<ServicesPages />} />
         <Route path="/portfolio/:serviceId" element={<PortfolioPages />} />
         <Route path="/portfolio/detail/:projectId" element={<PortfolioDetail />} />
+        <Route path="/testimoni" element={<TestimoniPages />} />
       </Routes>
     </BrowserRouter>
   )
