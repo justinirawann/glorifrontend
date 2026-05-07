@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import Navbar from "../components/Navbar";
+import config from '../config/config';
 
 /* ================= INFINITE COLUMN ================= */
 const InfiniteColumn = ({ images, speed = 40, delay = 0 }) => {
@@ -16,7 +17,7 @@ const InfiniteColumn = ({ images, speed = 40, delay = 0 }) => {
         {[...images, ...images].map((img, i) => (
           <div
             key={i}
-            className="w-64 xl:w-72 aspect-[3/4] overflow-hidden rounded-xl shadow-2xl"
+            className="w-56 lg:w-60 xl:w-64 2xl:w-72 aspect-[3/4] overflow-hidden rounded-xl shadow-2xl"
           >
             <img
               src={img}
@@ -42,13 +43,13 @@ const LandingPage = () => {
     const fetchImages = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8000/api/landing-images"
+          `${config.API_BASE_URL}/landing-images`
         );
         const data = await response.json();
 
         const imageUrls = data
           .slice(0, 8)
-          .map((img) => `http://localhost:8000/storage/${img.image_path}`);
+          .map((img) => `${config.API_BASE_URL.replace('/api', '')}/storage/${img.image_path}`);
 
         setImages(imageUrls.length ? imageUrls : Array(8).fill("/test.jpg"));
       } catch (error) {
@@ -58,7 +59,7 @@ const LandingPage = () => {
 
     const fetchServices = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/services");
+        const response = await fetch(`${config.API_BASE_URL}/services`);
         const data = await response.json();
         if (data.length > 0) {
           setServices(data);
@@ -76,12 +77,12 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="bg-black text-white w-full min-h-screen font-sans relative overflow-hidden">
+    <div className="bg-black text-white w-full h-screen font-sans relative overflow-hidden">
       <Navbar activePage="home" />
 
       {/* ================= RIGHT INFINITE CAROUSEL ================= */}
-      <div className="hidden lg:block absolute right-0 top-0 w-[45%] xl:w-1/2 h-full px-6 xl:px-10">
-        <div className="flex gap-10 h-full rotate-[-2deg]">
+      <div className="hidden lg:block absolute right-0 top-0 w-[42%] xl:w-[45%] 2xl:w-1/2 h-screen px-4 lg:px-6 xl:px-10">
+        <div className="flex gap-10 h-full">
           <InfiniteColumn images={images} speed={42} />
           <InfiniteColumn images={images} speed={60} delay={-10} />
         </div>
@@ -94,7 +95,7 @@ const LandingPage = () => {
         className="
           relative z-20 
           grid grid-cols-1 lg:grid-cols-2 
-          min-h-screen 
+          h-screen 
           items-center 
           px-4 sm:px-8 md:px-14 lg:px-24 
           pt-28
@@ -103,22 +104,22 @@ const LandingPage = () => {
         <div className="max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
           
           {/* HERO TITLE */}
-          <h1 className="hero-title text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-serif font-medium leading-tight mb-6 tracking-tight">
+          <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-serif font-medium leading-tight mb-4 lg:mb-6 tracking-tight">
             You Dream It
             <br />
             We Build It
           </h1>
 
           {/* HERO SUBTITLE */}
-          <p className="hero-sub text-gray-400 text-sm sm:text-base md:text-lg mb-10 max-w-md mx-auto lg:mx-0 leading-relaxed">
+          <p className="hero-sub text-gray-400 text-sm sm:text-base md:text-lg lg:text-sm xl:text-base mb-6 lg:mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">
             We deliver end-to-end solutions by providing integrated services
             from concept, planning, and development to final execution.
           </p>
 
           {/* ================= EXPERTISE ================= */}
-          <div className="mt-4">
+          <div className="mt-2 lg:mt-4">
             <h3
-              className="hero-sub italic font-serif text-lg sm:text-xl mb-6"
+              className="hero-sub italic font-serif text-base sm:text-lg lg:text-base xl:text-lg mb-4 lg:mb-6"
               style={{ color: goldColor }}
             >
               Our Expertise
@@ -130,13 +131,13 @@ const LandingPage = () => {
                 return (
                   <li
                     key={index}
-                    className="expert-item group border-t border-gray-700 py-4 flex items-center justify-center lg:justify-start cursor-pointer hover:bg-white/5 transition-all"
+                    className="expert-item group border-t border-gray-700 py-2 lg:py-3 xl:py-4 flex items-center justify-center lg:justify-start cursor-pointer hover:bg-white/5 transition-all"
                     style={{ animationDelay: `${0.6 + index * 0.15}s` }}
                   >
                     {service ? (
                       <Link to={`/services/${service.id}`} className="w-full">
-                        <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-serif flex items-center transition-all duration-300 group-hover:italic group-hover:text-yellow-500">
-                          <span className="w-2 h-2 border border-white rounded-full mr-6 transition-all group-hover:border-yellow-500 group-hover:scale-125" />
+                        <span className="text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl font-serif flex items-center transition-all duration-300 group-hover:italic group-hover:text-yellow-500">
+                          <span className="w-2 h-2 border border-white rounded-full mr-4 lg:mr-6 transition-all group-hover:border-yellow-500 group-hover:scale-125" />
                           <span className="transition-transform duration-300 group-hover:translate-x-1">
                             {item}
                           </span>
@@ -146,8 +147,8 @@ const LandingPage = () => {
                         </span>
                       </Link>
                     ) : (
-                      <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-serif flex items-center transition-all duration-300 group-hover:italic group-hover:text-yellow-500">
-                        <span className="w-2 h-2 border border-white rounded-full mr-6 transition-all group-hover:border-yellow-500 group-hover:scale-125" />
+                      <span className="text-lg sm:text-xl md:text-2xl lg:text-xl xl:text-2xl 2xl:text-3xl font-serif flex items-center transition-all duration-300 group-hover:italic group-hover:text-yellow-500">
+                        <span className="w-2 h-2 border border-white rounded-full mr-4 lg:mr-6 transition-all group-hover:border-yellow-500 group-hover:scale-125" />
                         <span className="transition-transform duration-300 group-hover:translate-x-1">
                           {item}
                         </span>

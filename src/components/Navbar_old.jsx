@@ -44,13 +44,13 @@ const Navbar = ({ activePage = 'home', isDark = false }) => {
         right-6 md:right-auto md:left-1/2 md:-translate-x-1/2 
         ${menuOpen ? 'w-[70vw] md:w-auto' : 'w-auto'}`}>
         
-        <div className="flex items-center justify-end md:justify-center gap-4 lg:gap-6 xl:gap-8 md:px-6 lg:px-8 md:py-3 lg:py-4 rounded-full bg-black">
+        <div className="flex items-center justify-end md:justify-center gap-8 md:px-8 md:py-4 rounded-full bg-black">
 
           {/* MOBILE BUTTON - Pojok Kanan */}
           <button 
             onClick={() => {
               setMenuOpen(!menuOpen);
-              setServicesOpen(false);
+              setServicesOpen(false); // Reset dropdown saat menu ditutup
               setPortfolioOpen(false);
             }} 
             className={`md:hidden text-3xl ${textColor} p-2 rounded-lg`}
@@ -59,7 +59,7 @@ const Navbar = ({ activePage = 'home', isDark = false }) => {
           </button>
 
           {/* DESKTOP MENU */}
-          <div className={`hidden md:flex space-x-4 lg:space-x-6 xl:space-x-8 text-xs lg:text-sm xl:text-base font-medium items-center ${textColor}`}>
+          <div className={`hidden md:flex space-x-8 text-sm font-medium items-center ${textColor}`}>
             <Link 
               to="/"
               className={`transition-all duration-300 hover:scale-105 ${hoverColor}
@@ -99,13 +99,13 @@ const Navbar = ({ activePage = 'home', isDark = false }) => {
                 Services ▼
               </div>
               {servicesOpen && services.length > 0 && (
-                <div className={`absolute top-full mt-2 backdrop-blur-md ${dropdownBg} rounded-xl py-2 lg:py-3 min-w-[180px] lg:min-w-[200px] xl:min-w-[220px] shadow-2xl z-50 border ${dropdownBorder}`}>
+                <div className={`absolute top-full mt-2 backdrop-blur-md ${dropdownBg} rounded-xl py-3 min-w-[220px] shadow-2xl z-50 border ${dropdownBorder}`}>
                   {services.map((service) => (
                     <Link 
                       key={service.id} 
                       to={`/services/${service.id}`}
                       onClick={() => setServicesOpen(false)}
-                      className={`block px-3 lg:px-4 xl:px-5 py-2 lg:py-3 hover:bg-white/10 cursor-pointer transition-all ${dropdownText} hover:text-[#FFB500] border-l-2 border-transparent hover:border-[#FFB500] text-xs lg:text-sm xl:text-base`}
+                      className={`block px-5 py-3 hover:bg-white/10 cursor-pointer transition-all ${dropdownText} hover:text-[#FFB500] border-l-2 border-transparent hover:border-[#FFB500]`}
                     >
                       {service.name}
                     </Link>
@@ -126,13 +126,13 @@ const Navbar = ({ activePage = 'home', isDark = false }) => {
                 Portfolio ▼
               </div>
               {portfolioOpen && services.length > 0 && (
-                <div className={`absolute top-full mt-2 backdrop-blur-md ${dropdownBg} rounded-xl py-2 lg:py-3 min-w-[180px] lg:min-w-[200px] xl:min-w-[220px] shadow-2xl z-50 border ${dropdownBorder}`}>
+                <div className={`absolute top-full mt-2 backdrop-blur-md ${dropdownBg} rounded-xl py-3 min-w-[220px] shadow-2xl z-50 border ${dropdownBorder}`}>
                   {services.map((service) => (
                     <Link 
                       key={service.id} 
                       to={`/portfolio/${service.id}`}
                       onClick={() => setPortfolioOpen(false)}
-                      className={`block px-3 lg:px-4 xl:px-5 py-2 lg:py-3 hover:bg-white/10 cursor-pointer transition-all ${dropdownText} hover:text-[#FFB500] border-l-2 border-transparent hover:border-[#FFB500] text-xs lg:text-sm xl:text-base`}
+                      className={`block px-5 py-3 hover:bg-white/10 cursor-pointer transition-all ${dropdownText} hover:text-[#FFB500] border-l-2 border-transparent hover:border-[#FFB500]`}
                     >
                       {service.name}
                     </Link>
@@ -142,7 +142,7 @@ const Navbar = ({ activePage = 'home', isDark = false }) => {
             </div>
 
             <button
-              className="px-3 lg:px-4 xl:px-6 py-1.5 lg:py-2 xl:py-2 rounded-full font-bold text-white transition-all duration-300 hover:brightness-110 text-xs lg:text-sm xl:text-base"
+              className="px-6 py-2 rounded-full font-bold text-white transition-all duration-300 hover:brightness-110"
               style={{ background: "linear-gradient(135deg, #FFB500, #FFDFA3)" }}
               onClick={() => window.location.href = '/contact'}
             >

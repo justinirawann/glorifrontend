@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import config from '../config/config';
 
 const ContactUs = () => {
   const goldColor = "#FFB500";
@@ -15,7 +16,7 @@ const ContactUs = () => {
   useEffect(() => {
     const fetchContactInfo = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/contact-info');
+        const response = await fetch(`${config.API_BASE_URL}/contact-info`);
         const data = await response.json();
         setContactInfo(data);
       } catch (error) {
@@ -36,7 +37,7 @@ const ContactUs = () => {
     setLoading(true);
     
     try {
-      const response = await fetch('http://localhost:8000/api/contact-messages', {
+      const response = await fetch(`${config.API_BASE_URL}/contact-messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

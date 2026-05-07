@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
+import config from '../config/config';
 
 const ServicesPages = () => {
   const { id } = useParams();
@@ -19,7 +20,7 @@ const ServicesPages = () => {
   useEffect(() => {
     const fetchService = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/services/${id}`);
+        const response = await fetch(`${config.API_BASE_URL}/services/${id}`);
         const data = await response.json();
         setService(data);
       } catch (error) {
@@ -29,7 +30,7 @@ const ServicesPages = () => {
 
     const fetchPortfolios = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/services/${id}/portfolios`);
+        const response = await fetch(`${config.API_BASE_URL}/services/${id}/portfolios`);
         const data = await response.json();
         setPortfolios(data);
       } catch (error) {
@@ -67,7 +68,7 @@ const ServicesPages = () => {
         id: p.id,
         title: p.name,
         category: p.category ? p.category.toLowerCase() : 'residence',
-        imageUrl: `http://localhost:8000/storage/${p.banner_image}`
+        imageUrl: `${config.API_BASE_URL.replace('/api', '')}/storage/${p.banner_image}`
       }))
     : [];
 
@@ -102,7 +103,7 @@ const ServicesPages = () => {
           className="absolute inset-0"
         >
           <img 
-            src={service.banner_image ? `http://localhost:8000/storage/${service.banner_image}` : '/test.jpg'}
+            src={service.banner_image ? `${config.API_BASE_URL.replace('/api', '')}/storage/${service.banner_image}` : '/test.jpg'}
             alt="Hero Background" 
             className="w-full h-full object-cover"
           />

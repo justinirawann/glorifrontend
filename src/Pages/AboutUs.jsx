@@ -1,6 +1,7 @@
   import React, { useState, useEffect } from "react";
   import { Link } from 'react-router-dom';
   import Navbar from '../components/Navbar';
+  import config from '../config/config';
 
   const AboutUs = () => {
     const goldColor = "#FFB500";
@@ -12,8 +13,8 @@
       const fetchAllData = async () => {
         try {
           const [logosRes, imagesRes] = await Promise.all([
-            fetch('http://localhost:8000/api/client-logos'),
-            fetch('http://localhost:8000/api/about-images')
+            fetch(`${config.API_BASE_URL}/client-logos`),
+            fetch(`${config.API_BASE_URL}/about-images`)
           ]);
           
           const [logosData, imagesData] = await Promise.all([
@@ -121,7 +122,7 @@
               <div className="hidden md:block relative w-full md:w-[78%] h-[520px] rounded-[50px] shadow-2xl bg-black">
                 <div className="relative w-full h-full overflow-hidden rounded-[50px]">
                   <img 
-                    src={`http://localhost:8000/storage/${aboutImages.hero.image_path}`}
+                    src={`${config.API_BASE_URL.replace('/api', '')}/storage/${aboutImages.hero.image_path}`}
                     alt="Interior Design" 
                     className="w-full h-full object-cover scale-[1.05]"
                   />
@@ -141,7 +142,7 @@
             {aboutImages.hero?.image_path && (
               <div className="block md:hidden w-full mt-6 rounded-2xl overflow-hidden shadow-xl">
                 <img 
-                  src={`http://localhost:8000/storage/${aboutImages.hero.image_path}`}
+                  src={`${config.API_BASE_URL.replace('/api', '')}/storage/${aboutImages.hero.image_path}`}
                   alt="Interior Design Mobile" 
                   className="w-full h-[260px] object-cover"
                 />
@@ -418,7 +419,7 @@
               {[...clientLogos, ...clientLogos].map((logo, i) => (
                 <div key={i} className="client-card">
                   <img 
-                    src={`http://localhost:8000/storage/${logo.image_path}`} 
+                    src={`${config.API_BASE_URL.replace('/api', '')}/storage/${logo.image_path}`} 
                     alt="Client Logo" 
                     className="w-full h-full object-contain"
                     draggable={false}
@@ -499,7 +500,7 @@
           {aboutImages.closing?.image_path && (
             <div className="relative h-[600px] w-full flex items-center justify-center overflow-hidden rounded-3xl mt-24" data-aos="zoom-in-up">
               <img 
-                src={`http://localhost:8000/storage/${aboutImages.closing.image_path}`}
+                src={`${config.API_BASE_URL.replace('/api', '')}/storage/${aboutImages.closing.image_path}`}
                 className="absolute inset-0 w-full h-full object-cover brightness-50" 
                 alt="background" 
               />

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
+import config from '../config/config';
 
 const PortfolioPages = () => {
   const { serviceId } = useParams();
@@ -12,10 +13,10 @@ const PortfolioPages = () => {
   useEffect(() => {
     const fetchServiceData = async () => {
       try {
-        const serviceRes = await fetch(`http://localhost:8000/api/services/${serviceId}`);
+        const serviceRes = await fetch(`${config.API_BASE_URL}/services/${serviceId}`);
         const serviceData = await serviceRes.json();
         setService(serviceData);
-        const portfolioRes = await fetch(`http://localhost:8000/api/services/${serviceId}/portfolios`);
+        const portfolioRes = await fetch(`${config.API_BASE_URL}/services/${serviceId}/portfolios`);
         const portfolioData = await portfolioRes.json();
         setPortfolios(portfolioData);
       } catch (error) {
@@ -42,7 +43,7 @@ const PortfolioPages = () => {
         id: p.id,
         title: p.name,
         category: p.category ? p.category.toLowerCase() : 'residence',
-        imageUrl: p.banner_image ? `http://localhost:8000/storage/${p.banner_image}` : '/test.jpg',
+        imageUrl: p.banner_image ? `${config.API_BASE_URL.replace('/api', '')}/storage/${p.banner_image}` : '/test.jpg',
         desc: p.description || "Detail pengerjaan interior dengan fokus pada fungsionalitas dan estetika."
       }))
     : [];

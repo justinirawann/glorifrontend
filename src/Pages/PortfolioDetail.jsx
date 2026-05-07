@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
+import config from '../config/config';
 
 const PortfolioDetail = () => {
   const { projectId } = useParams();
@@ -13,7 +14,7 @@ const PortfolioDetail = () => {
   useEffect(() => {
     const fetchDetail = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/portfolios/${projectId}`);
+        const response = await fetch(`${config.API_BASE_URL}/portfolios/${projectId}`);
         const data = await response.json();
         setProject(data);
       } catch (error) {
@@ -100,12 +101,12 @@ const PortfolioDetail = () => {
       {/* --- BANNER (CLICKABLE) --- */}
       <section className="px-8 md:px-20 mb-20">
         <motion.div 
-          onClick={() => setSelectedImg(project.banner_image ? `http://localhost:8000/storage/${project.banner_image}` : '/test.jpg')}
+          onClick={() => setSelectedImg(project.banner_image ? `${config.API_BASE_URL.replace('/api', '')}/storage/${project.banner_image}` : '/test.jpg')}
           className="w-full aspect-[16/7] overflow-hidden bg-zinc-900 shadow-2xl cursor-zoom-in"
         >
           <motion.img 
             whileHover={{ scale: 1.03 }}
-            src={project.banner_image ? `http://localhost:8000/storage/${project.banner_image}` : '/test.jpg'}
+            src={project.banner_image ? `${config.API_BASE_URL.replace('/api', '')}/storage/${project.banner_image}` : '/test.jpg'}
             className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700" 
           />
         </motion.div>
@@ -138,11 +139,11 @@ const PortfolioDetail = () => {
           </motion.div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
-            <PhotoBox img={`http://localhost:8000/storage/${project.displayed_images[0].image_path}`} span="md:col-span-8 aspect-video" onOpen={setSelectedImg} />
-            <PhotoBox img={`http://localhost:8000/storage/${project.displayed_images[1].image_path}`} span="md:col-span-4 aspect-[3/4]" onOpen={setSelectedImg} />
-            <PhotoBox img={`http://localhost:8000/storage/${project.displayed_images[2].image_path}`} span="md:col-start-2 md:col-span-4 aspect-[2/3]" onOpen={setSelectedImg} />
-            <PhotoBox img={`http://localhost:8000/storage/${project.displayed_images[3].image_path}`} span="md:col-span-6 aspect-video" onOpen={setSelectedImg} />
-            <PhotoBox img={`http://localhost:8000/storage/${project.displayed_images[4].image_path}`} span="md:col-start-3 md:col-span-8 aspect-[16/8] mt-10" onOpen={setSelectedImg} />
+            <PhotoBox img={`${config.API_BASE_URL.replace('/api', '')}/storage/${project.displayed_images[0].image_path}`} span="md:col-span-8 aspect-video" onOpen={setSelectedImg} />
+            <PhotoBox img={`${config.API_BASE_URL.replace('/api', '')}/storage/${project.displayed_images[1].image_path}`} span="md:col-span-4 aspect-[3/4]" onOpen={setSelectedImg} />
+            <PhotoBox img={`${config.API_BASE_URL.replace('/api', '')}/storage/${project.displayed_images[2].image_path}`} span="md:col-start-2 md:col-span-4 aspect-[2/3]" onOpen={setSelectedImg} />
+            <PhotoBox img={`${config.API_BASE_URL.replace('/api', '')}/storage/${project.displayed_images[3].image_path}`} span="md:col-span-6 aspect-video" onOpen={setSelectedImg} />
+            <PhotoBox img={`${config.API_BASE_URL.replace('/api', '')}/storage/${project.displayed_images[4].image_path}`} span="md:col-start-3 md:col-span-8 aspect-[16/8] mt-10" onOpen={setSelectedImg} />
           </div>
         )}
 
@@ -185,13 +186,13 @@ const PortfolioDetail = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
-                  onClick={() => setSelectedImg(`http://localhost:8000/storage/${image.image_path}`)}
+                  onClick={() => setSelectedImg(`${config.API_BASE_URL.replace('/api', '')}/storage/${image.image_path}`)}
                   className="aspect-[4/3] bg-zinc-900 overflow-hidden cursor-zoom-in group"
                 >
                   <motion.img
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.8 }}
-                    src={`http://localhost:8000/storage/${image.image_path}`}
+                    src={`${config.API_BASE_URL.replace('/api', '')}/storage/${image.image_path}`}
                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                   />
                 </motion.div>

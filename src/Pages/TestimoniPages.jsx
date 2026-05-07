@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import config from '../config/config';
 
 const TestimoniPages = () => {
   const goldColor = "#FFB500";
@@ -8,35 +9,12 @@ const TestimoniPages = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/testimonials')
+    fetch(`${config.API_BASE_URL}/testimonials`)
       .then(r => r.json())
       .then(data => setTestimonials(data))
       .catch(err => console.log(err))
       .finally(() => setIsLoading(false));
   }, []);
-
-  const StarIcon = ({ fill }) => {
-    const id = `star-${Math.random().toString(36).substr(2, 9)}`;
-    return (
-      <svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id={id}>
-            <stop offset={`${fill * 100}%`} stopColor={goldColor} />
-            <stop offset={`${fill * 100}%`} stopColor="#2a2a2a" />
-          </linearGradient>
-        </defs>
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill={`url(#${id})`} />
-      </svg>
-    );
-  };
-
-  const Stars = ({ rating }) => (
-    <div className="flex gap-[2px]">
-      {[1,2,3,4,5].map(i => (
-        <StarIcon key={i} fill={Math.min(1, Math.max(0, parseFloat(rating) - (i - 1)))} />
-      ))}
-    </div>
-  );
 
   return (
     <div className="bg-black text-white min-h-screen font-sans">
@@ -59,7 +37,7 @@ const TestimoniPages = () => {
         </div>
         <p className="text-xs md:text-sm uppercase tracking-widest text-[#FFB500] mb-3 relative z-10">Testimoni</p>
         <h1 className="text-4xl md:text-7xl font-serif max-w-3xl leading-tight relative z-10">
-          Apa kata <span className="italic" style={{ backgroundImage: 'linear-gradient(135deg, #FFB500, #FFDFA3)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>klien</span> kami
+          What Our <span className="italic" style={{ backgroundImage: 'linear-gradient(135deg, #FFB500, #FFDFA3)', backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent' }}>Clients</span> Say
         </h1>
       </section>
 
@@ -68,7 +46,7 @@ const TestimoniPages = () => {
         {isLoading ? (
           <div className="text-center text-gray-500 py-20">Loading...</div>
         ) : testimonials.length === 0 ? (
-          <div className="text-center text-gray-500 py-20">Belum ada testimoni.</div>
+          <div className="text-center text-gray-500 py-20">There's no testimonials available.</div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {testimonials.map((t, i) => (
@@ -84,9 +62,6 @@ const TestimoniPages = () => {
                   <span className="text-[10px] uppercase tracking-widest font-medium px-2 py-[3px] rounded-full border border-[#FFB500]/25 text-[#FFB500] truncate min-w-0">
                     {t.portfolio ? t.portfolio.name : t.industry}
                   </span>
-                  <div className="flex-shrink-0">
-                    <Stars rating={t.rating} />
-                  </div>
                 </div>
 
                 {/* BODY */}
